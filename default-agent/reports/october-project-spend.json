@@ -1,0 +1,11 @@
+{
+  "name": "october-project-spend",
+  "text": "total spend in October 2025 broken down by project",
+  "query_type": "bigquery_sql",
+  "query": "\nSELECT \n  project.id AS project_id,\n  project.name AS project_name,\n  SUM(cost) AS total_spend\nFROM `chip_billing.gcp_billing_export_resource_v1_01D01E_9B88C7_8078BC`\nWHERE DATE(usage_start_time) BETWEEN '2025-10-01' AND '2025-10-31'\nGROUP BY project.id, project.name\nORDER BY total_spend DESC\n",
+  "status": "private",
+  "meta": {
+    "sql_flow_diagram": "flowchart TD\n    Q[\"Question: Total spend in October 2025 broken down by project\"]\n    T1[(\"gcp_billing_export_resource_v1_01D01E_9B88C7_8078BC\")]\n    F1{\"Filter: DATE(usage_start_time) BETWEEN '2025-10-01' AND '2025-10-31'\"}\n    G1{\"Group By: project.id, project.name\"}\n    AGG{\"SUM(cost) AS total_spend\"}\n    S1{\"Order By: total_spend DESC\"}\n    R[\"Result: Project ID, Project Name, Total Spend for October 2025\"]\n\n    Q --\u003e T1\n    T1 --\u003e F1\n    F1 --\u003e G1\n    G1 --\u003e AGG\n    AGG --\u003e S1\n    S1 --\u003e R"
+  },
+  "datasource_name": "google_bigquery"
+}
